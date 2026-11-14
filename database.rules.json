@@ -1,0 +1,22 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "accountProfiles": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid && !data.exists() && newData.exists()",
+        ".validate": "newData.hasChildren(['name', 'role'])",
+        "name": {
+          ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 80"
+        },
+        "role": {
+          ".validate": "newData.val() === 'RENTER' || newData.val() === 'OWNER'"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  }
+}
